@@ -1,0 +1,17 @@
+body {
+	background-image:	url(images/bg.gif);
+	margin:				0 0 0 0;
+}
+
+.sides {
+	border-left:				1px solid #000000;
+	border-right:				1px solid #000000;
+}
+
+.topborder {
+	border-top:					1px solid #000000;
+}
+
+.bottomborder {
+	border-bottom:				1px solid #000000;
+}
