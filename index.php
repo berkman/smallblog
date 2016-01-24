@@ -31,13 +31,15 @@ $n = $_SESSION['nickname'];
 //	$archive_link = true;
 //}
 
-/*
+
 // Determine who else is logged into the website.
 $query4 = "SELECT username FROM public.login WHERE loggedin='y'";
-$r4 = mysql_query($query4) or die ("Error with query4.");
-$row4 = mysql_fetch_array($r4);
-$logged = mysql_num_rows($r4);
- */
+//$r4 = mysql_query($query4) or die ("Error with query4.");
+//$row4 = mysql_fetch_array($r4);
+//$logged = mysql_num_rows($r4);
+$r4 = pg_query($query4) or die ("Error with query4.");
+$row4 = pg_fetch_array($r4);
+$logged = pg_num_rows($r4);
 
 
 // Print the page header.
@@ -75,9 +77,11 @@ if ($motd != '') {
 // Logged in user.
 if ($u != "") {
 	// Retrieve the date from the last users login.
-	//$query3 = "SELECT DATE_FORMAT(last_login, '%W, %M %d, %Y at %h:%i %p') FROM public.login WHERE username='$u'";
+	$query3 = "SELECT DATE_FORMAT(last_login, '%W, %M %d, %Y at %h:%i %p') FROM public.login WHERE username='$u'";
 	//$r3 = @mysql_query ($query3);
 	//$row3 = mysql_fetch_array($r3);
+	$r3 = pg_query($query3);
+	$row3 = pg_fetch_array($r3);
 
 
 	// Greet the user.
@@ -86,7 +90,7 @@ if ($u != "") {
 	else
 		echo "<p>Welcome Back, " .$u. ".</p>\n";
 
-	/*if ($row3[0] == "")
+	if ($row3[0] == "")
 		echo "<p>This is your first login.</p>\n";
 	else
 		echo "<p>You last logged in: [ " .$row3[0]. " ].<br />\n";
@@ -104,7 +108,7 @@ if ($u != "") {
 		}
 		echo "</p>\n";
 	}
-*/
+
 
 	// Display the menu.
 	echo '<p>' . "\n";
@@ -194,12 +198,13 @@ for ($i = 0; $i < $show; $i++) {
 	echo '<br />' . "\n";
 }
 
+ */
 
 // Print the archives link, if needed.
 if ($archive_link)
 	echo '<p>[ <a href="archive.php?s=' . $show_num . '">Archive</a> ]</p>' . "\n";
 
- */
+
 ?>
 <table cellpadding="4" cellspacing="4">
   <tr>

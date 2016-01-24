@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 
 			ob_end_clean();
 
-			header ("Location: http://" . $_SERVER['HTTP_HOST'] .
+			header ("Location: https://" . $_SERVER['HTTP_HOST'] .
 				dirname($SERVER['PHP_SELF']) . "/");
 			exit();
 		}
@@ -79,7 +79,7 @@ echo $message;
 echo '<p class="title">Login:</p>' ."\n";
 
 ?>
-<form action="<? echo basename($PHP_SELF) ?>" method="post" name="form" id="form">
+<form action="login.php" method="post" name="form" id="form">
 <table>
   <tr>
     <td>Username:</td>
