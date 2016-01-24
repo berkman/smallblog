@@ -65,7 +65,7 @@ if (!$todaybday) {
 	$query5 = "SELECT motd FROM options";
 	$mess = @mysql_query($query5);
 	$temp = mysql_fetch_array($mess);
-	
+
 	if ($temp) {
 		$motd = $temp['motd'];
 	}
@@ -83,8 +83,8 @@ if ($u != "") {
 	$query3 = "SELECT DATE_FORMAT(last_login, '%W, %M %d, %Y at %h:%i %p') FROM login WHERE username='$u'";
 	$r3 = @mysql_query ($query3);
 	$row3 = mysql_fetch_array($r3);
-	
-	
+
+
 	// Greet the user.
 	if ($n != "")
 		echo "<p>Welcome Back, " .$n. ".</p>\n";
@@ -94,8 +94,8 @@ if ($u != "") {
 		echo "<p>This is your first login.</p>\n";
 	else
 		echo "<p>You last logged in: [ " .$row3[0]. " ].<br />\n";
-	
-	
+
+
 	// Display the other logged in users.
 	if ($logged == 1)
 		echo "<p>You're the only user logged in.</p>\n";
@@ -108,8 +108,8 @@ if ($u != "") {
 		}
 		echo "</p>\n";
 	}
-	
-	
+
+
 	// Display the menu.
 	echo '<p>' . "\n";
 	echo '  [ <a href="post.php">Post</a> ]<br />' . "\n";
@@ -130,30 +130,30 @@ else {
 for ($i = 0; $i < $show; $i++) {
 	$row = mysql_fetch_array($r);
 	$date = $row[4];
-  
-  
+
+
 	// Get the users nickname and e-mail.
 	$query3 = "SELECT nickname, email, picture FROM user WHERE username='" . $row['username'] . "'";
 	$r3 = mysql_query($query3, $link) or die ("Error with query.");
 	$e = mysql_fetch_array($r3);
-  
-  
+
+
 	// Determine the users preference for their post name.
 	$query3 = "SELECT post_name FROM pref WHERE username='" . $row['username'] . "'";
 	$r3 = mysql_query($query3);
 	$p = mysql_fetch_array($r3);
-    
-  
+
+
 	echo '<table>' . "\n";
-  
-  
+
+
 	// Print the user's icon, if they have one.
 	if($e['picture'] != '')
 		echo '  <tr><td class="subj"><img src="uploads/' .$e['picture']. '" alt="'.$row['username'].'\'s icon" border="1" /> ' . $row['subject'] . '</td></tr>' . "\n";
 	else
 		echo '  <tr><td class="subj">' . $row['subject'] . '</td></tr>' . "\n";
-  
-  
+
+
 	// Print the information line for the post based on user's preference.
   	if ($p[0] == 'username') {
 		if ($e[1] != "") {
@@ -171,7 +171,7 @@ for ($i = 0; $i < $show; $i++) {
 			echo '  <tr><td>Posted ' .$date. ' by ' .$e[0]. '</td></tr>' . "\n";
 		}
 	}
-  
+
 	// Print the post's body.
 	echo '  <tr><td>' . "\n";
 	echo '    ' . $row['body'] . "\n";
@@ -184,8 +184,8 @@ for ($i = 0; $i < $show; $i++) {
 		echo '  <tr><td><img src="uploads/' .$row['image']. '" /></td></tr>' . "\n";
 		echo '  <tr><td>&nbsp;</td></tr>' . "\n";
 	}
-  
-  
+
+
 	// Print the comments link, if there are comments.
 	if ($row['comment_fl'] == 'y') {
 		$query_cmnt = "SELECT cmntID FROM comments WHERE newsID='".$row['newsID']."'";
@@ -193,7 +193,7 @@ for ($i = 0; $i < $show; $i++) {
 		$num_cmnts = mysql_num_rows($cmnt_rslt);
 		echo '  <tr><td colspan="3"><a href="comments.php?newsID=' . $row['newsID'] . '">Comments ('.$num_cmnts.')</a></td></tr>' . "\n";
 	}
-  
+
 	echo '</table>' . "\n";
 	echo '<br />' . "\n";
 }
@@ -208,14 +208,13 @@ if ($archive_link)
 <table cellpadding="4" cellspacing="4">
   <tr>
     <td><img src="images/valid_xhtml.gif" /></td>
-	<td><img src="images/php-power-white.gif" /></td>
-	<td><img src="images/mysql.png" /></td>
-  </tr>
+		<td><img src="images/php-power-white.gif" /></td>
+		<td><img src="images/mysql.png" /></td>
+	</tr>
 </table>
 <?php
 
-
 // Print the page footer.
-//include ('include/footer.php');
+include ('include/footer.php');
 
 ?>
