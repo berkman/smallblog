@@ -6,7 +6,6 @@ $title = 'Options';
 session_start();
 $u = $_SESSION['username'];
 
-
 include("include/header.php");
 echo '<p class="title">Options</p>' . "\n";
 
@@ -209,35 +208,21 @@ if (isset($_POST['newmotd'])) {
 
 
 $query = "SELECT * FROM user WHERE username='$u'";
-$r = mysql_query($query) or die ("Error with query.");
-$row = mysql_fetch_array($r);
+//$r = mysql_query($query) or die ("Error with query.");
+//$row = mysql_fetch_array($r);
+$r = pg_query($query) or die ("Error with query.");
+$row = pg_fetch_array($r);
 
 $query3 = "SELECT * FROM pref WHERE username='$u'";
-$r3 = mysql_query($query3) or die ("Error with query.");
-$postn = mysql_fetch_array($r3);
+//$r3 = mysql_query($query3) or die ("Error with query.");
+//$postn = mysql_fetch_array($r3);
+$r3 = pg_query($query3) or die ("Error with query.");
+$postn = pg_fetch_array($r3);
 
-$query9 = "SELECT motd FROM options";
-$r9 = mysql_query($query9) or die ("Error with query.");
-$res = mysql_fetch_array($r9);
-$motd = $res['motd'];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//$query9 = "SELECT motd FROM options";
+//$r9 = mysql_query($query9) or die ("Error with query.");
+//$res = mysql_fetch_array($r9);
+//$motd = $res['motd'];
 
 
 echo "<p>What's up ";
