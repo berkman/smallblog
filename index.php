@@ -1,53 +1,53 @@
-<?
+<?php
 
-include("include/include.php");
+//include("include/include.php");
 
 
 // Register the session variables.
-session_start();
-session_register("username");
-session_register("nickname");
+//session_start();
+//session_register("username");
+//session_register("nickname");
 
-$u = $_SESSION['username'];
-$n = $_SESSION['nickname'];
-$motd = '';
+//$u = $_SESSION['username'];
+//$n = $_SESSION['nickname'];
+//$motd = '';
 
 
 // Get the news from the database.
-$query = "SELECT newsID, subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y'), comment_fl, image FROM news ORDER BY newsID DESC";
-$r = mysql_query($query) or die ("Error getting news.");
-$num_rows = mysql_num_rows($r);
+//$query = "SELECT newsID, subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y'), comment_fl, image FROM news ORDER BY newsID DESC";
+//$r = mysql_query($query) or die ("Error getting news.");
+//$num_rows = mysql_num_rows($r);
 
 
 // Determine how many news items to display on the main page.
-$query2 = "SELECT show_num FROM options";
-$r2 = mysql_query($query2) or die ("Error getting number of news items.");
-$row = mysql_fetch_array($r2);
-$show_num = $row[0];
+//$query2 = "SELECT show_num FROM options";
+//$r2 = mysql_query($query2) or die ("Error getting number of news items.");
+//$row = mysql_fetch_array($r2);
+//$show_num = $row[0];
 
-if ($num_rows < $show_num) {
-	$show = $num_rows;
-	$archive_link = false;
-}
-else {
-	$show = $show_num;
-	$archive_link = true;
-}
+//if ($num_rows < $show_num) {
+//	$show = $num_rows;
+//	$archive_link = false;
+//}
+//else {
+//	$show = $show_num;
+//	$archive_link = true;
+//}
 
-
+/*
 // Determine who else is logged into the website.
 $query4 = "SELECT username FROM login WHERE loggedin='y'";
 $r4 = mysql_query($query4) or die ("Error with query4.");
 $row4 = mysql_fetch_array($r4);
 $logged = mysql_num_rows($r4);
-
+ */
 
 
 // Print the page header.
-include ('include/header.php');
+//include ('include/header.php');
 
 
-
+/*
 // Check for user's birthday.
 $bday = "SELECT username, nickname FROM user WHERE DATE_FORMAT(dob, '%b %e') = DATE_FORMAT(NOW(), '%b %e')";
 $bresult = @mysql_query($bday);
@@ -203,7 +203,7 @@ for ($i = 0; $i < $show; $i++) {
 if ($archive_link)
 	echo '<p>[ <a href="archive.php?s=' . $show_num . '">Archive</a> ]</p>' . "\n";
 
-
+ */
 ?>
 <table cellpadding="4" cellspacing="4">
   <tr>
@@ -212,10 +212,10 @@ if ($archive_link)
 	<td><img src="images/mysql.png" /></td>
   </tr>
 </table>
-<?
+<?php
 
 
 // Print the page footer.
-include ('include/footer.php');
+//include ('include/footer.php');
 
 ?>

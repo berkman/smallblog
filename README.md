@@ -1,6 +1,4 @@
-berkPHP
+SimpleBlog
 =======
 
-PHP blogging system
-
-Suuuuper old
+Simple blogging system
