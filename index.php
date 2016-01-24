@@ -1,6 +1,6 @@
 <?php
 
-//include("include/include.php");
+include("include/include.php");
 
 
 // Register the session variables.
