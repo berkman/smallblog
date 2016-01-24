@@ -9,7 +9,7 @@ $u = $_SESSION['username'];
 include("include/header.php");
 echo '<p class="title">Options</p>' . "\n";
 
-
+/*
 if (isset($_POST['reset'])) {
 	$user = $_GET['u'];
 
@@ -307,7 +307,7 @@ if ($_SESSION['access'] == "admin")
 $img = "SELECT picture FROM public.user WHERE username='$u'";
 $imgr = mysql_query($img);
 $imgrow = mysql_fetch_array($imgr);
-
+*/
 ?>
 <form action="<? echo basename($PHP_SELF) ?>" method="post" name="icon" enctype="multipart/form-data">
 <table>
