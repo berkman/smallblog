@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <title>Simple Blog<? if ($title != ""){ echo " - " . $title; } ?></title>
+  <title>Small Blog<? if ($title != ""){ echo " - " . $title; } ?></title>
   <script language="JavaScript" src="include/script.js" type="text/javascript"></script>
   <link href="include/style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
-<h1>Simple Blog</h1>
+<h1>Small Blog</h1>

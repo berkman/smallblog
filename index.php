@@ -7,8 +7,8 @@ session_start();
 
 $u = $_SESSION['username'];
 $n = $_SESSION['nickname'];
-$u = "username";
-$n = "nickname";
+//$u = "username";
+//$n = "nickname";
 //$motd = '';
 
 
