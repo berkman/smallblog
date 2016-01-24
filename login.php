@@ -5,9 +5,10 @@ $title = 'Log In';
 
 session_start();
 
-$t = "SELECT CURRENT_TIMESTAMP() FROM login";
+//$t = "SELECT CURRENT_TIMESTAMP() FROM login";
 //$tr = @mysql_query ($t);
 //$trow = mysql_fetch_row ($tr);
+$t = "SELECT current_timestamp FROM login";
 $tr = pg_query($t);
 $trow = pg_fetch_row($tr);
 
