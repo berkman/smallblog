@@ -44,7 +44,7 @@ $logged = mysql_num_rows($r4);
 
 
 // Print the page header.
-//include ('include/header.php');
+include ('include/header.php');
 
 
 /*
@@ -56,8 +56,6 @@ $todaybday = mysql_fetch_array($bresult);
 if ($todaybday) {
 	$motd = 'Happy Birthday ' .$todaybday['nickname']. '!';
 }
-
-
 
 
 // Message of the day.
