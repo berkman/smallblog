@@ -1,2 +1,3 @@
 berkPHP.txt
-db_backups
+vendor/
+db_backups/

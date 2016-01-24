@@ -4,11 +4,11 @@ include("include/include.php");
 
 // Register the session variables.
 session_start();
-//session_register("username");
-//session_register("nickname");
 
-//$u = $_SESSION['username'];
-//$n = $_SESSION['nickname'];
+$u = $_SESSION['username'];
+$n = $_SESSION['nickname'];
+$u = "username";
+$n = "nickname";
 //$motd = '';
 
 
@@ -72,14 +72,14 @@ if (!$todaybday) {
 if ($motd != '') {
 	echo '<p class="motd">[ '.$motd.' ]</p>';
 }
-
+*/
 
 // Logged in user.
 if ($u != "") {
 	// Retrieve the date from the last users login.
-	$query3 = "SELECT DATE_FORMAT(last_login, '%W, %M %d, %Y at %h:%i %p') FROM login WHERE username='$u'";
-	$r3 = @mysql_query ($query3);
-	$row3 = mysql_fetch_array($r3);
+	//$query3 = "SELECT DATE_FORMAT(last_login, '%W, %M %d, %Y at %h:%i %p') FROM login WHERE username='$u'";
+	//$r3 = @mysql_query ($query3);
+	//$row3 = mysql_fetch_array($r3);
 
 
 	// Greet the user.
@@ -87,7 +87,8 @@ if ($u != "") {
 		echo "<p>Welcome Back, " .$n. ".</p>\n";
 	else
 		echo "<p>Welcome Back, " .$u. ".</p>\n";
-	if ($row3[0] == "")
+
+	/*if ($row3[0] == "")
 		echo "<p>This is your first login.</p>\n";
 	else
 		echo "<p>You last logged in: [ " .$row3[0]. " ].<br />\n";
@@ -105,7 +106,7 @@ if ($u != "") {
 		}
 		echo "</p>\n";
 	}
-
+*/
 
 	// Display the menu.
 	echo '<p>' . "\n";
@@ -122,7 +123,7 @@ else {
 	echo '<p>[ <a href="login.php">Log In</a> ]</p>' . "\n";
 }
 
-
+/*
 // Display the news.
 for ($i = 0; $i < $show; $i++) {
 	$row = mysql_fetch_array($r);
