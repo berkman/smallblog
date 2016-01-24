@@ -1,15 +1,12 @@
-<? 
+<?
 
 include("include/include.php");
 $title = 'Comments';
 
 
 session_start();
-session_register("username");
-
 
 $logged = false;
-
 
 $n = $_GET['newsID'];
 if ($n == "") {
@@ -38,11 +35,11 @@ if (isset($_POST['post'])) {
 
 	$query = "INSERT INTO comments (newsID, username, subject, comment, cmnt_stmp) VALUES ('$n', '$u', '$s', '$c', NOW())";
 	$r = mysql_query($query);
-	
+
 	echo '<p class="success">Comment posted.</p>' . "<br />";
 }
 
-  
+
 $date = $row[4];
 
 
@@ -50,17 +47,17 @@ $date = $row[4];
 $query3 = "SELECT nickname, email, picture FROM user WHERE username='" . $row['username'] . "'";
 $r3 = mysql_query($query3) or die ("Error with query.");
 $e = mysql_fetch_array($r3);
-  
-  
+
+
 // Determine the users preference for their post name.
 $query3 = "SELECT post_name FROM pref WHERE username='" . $row['username'] . "'";
 $r3 = mysql_query($query3);
 $p = mysql_fetch_array($r3);
-    
-  
+
+
 echo '<table>' . "\n";
- 
-  
+
+
 // Print the user's icon, if they have one.
 if($e['picture'] != '') {
 	echo '  <tr><td class="subj"><img src="uploads/' .$e['picture']. '" alt="'.$row['username'].'\'s icon" /> ' . $row['subject'] . '</td></tr>' . "\n";
@@ -68,8 +65,8 @@ if($e['picture'] != '') {
 else {
 	echo '  <tr><td class="subj">' . $row['subject'] . '</td></tr>' . "\n";
 }
-	 
-  
+
+
 // Print the information line for the post based on user's preference.
 if ($p[0] == 'username') {
 	if ($e[1] != "") {
@@ -118,20 +115,20 @@ $num_rows2 = mysql_num_rows($r2);
 /*if ($num_rows2 > 0) {
 	echo '<p class="title">'.$title.'</p>' . "\n";
 }*/
-  
+
 for ($i = 0; $i < $num_rows2; $i++) {
 	$row2 = mysql_fetch_array($r2);
 	$date = $row2[4];
-  
+
 	echo '<table>' . "\n";
 	echo '  <tr>' . "\n";
 	echo '    <td class="subj">' . $row2['subject'] . '</td>' . "\n";
 	echo '  </tr>' . "\n";
-  
+
 	echo '  <tr>' . "\n";
 	echo '    <td>Comment posted ' . $date . ' by ' . $row2['username'] . '</td>' . "\n";
 	echo '  </tr>' . "\n";
-  
+
 	echo '  <tr>' . "\n";
 	echo '    <td>' . "\n";
 	echo '      ' . $row2['comment'] . "\n";

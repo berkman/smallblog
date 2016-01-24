@@ -4,9 +4,6 @@ include("include/include.php");
 $title = 'Options';
 
 session_start();
-session_register("username");
-session_register("access");
-session_register("nickname");
 $u = $_SESSION['username'];
 
 
@@ -16,23 +13,23 @@ echo '<p class="title">Options</p>' . "\n";
 
 if (isset($_POST['reset'])) {
 	$user = $_GET['u'];
-	
+
 	$query = "SELECT email, nickname FROM user WHERE username='$user'";
 	$r = mysql_query($query) or die ("Error with query.");
 	$row = mysql_fetch_array($r);
-	
+
 	if ($row['nickname'] != "") {
 		$u = $row['nickname'];
 	}
-	
+
 	$p = "";
 	for($i = 0; $i < 6; $i++) {
 		$p = $p . rand(1,9);
 	}
-		
+
 	$query2 = "UPDATE login SET password=SHA1($p) WHERE username='$user'";
 	$r2 = mysql_query($query2) or die ("Error with query.");
-	
+
 	$to = $row['email'];
 	$subject = "Your bong-it.com password";
 	$body = $user . ", you're a dumbass.  The server has reset your password.  Your new password is: " .$p. "\n\nThanks,\nbong-it.com admin";
@@ -69,27 +66,27 @@ if (isset($_POST['icon'])) {
 	if ($d == 'y') {
 		$query2 = "UPDATE user SET picture='' WHERE username='$u'";
 		$r2 = mysql_query($query2) or die ("uh oh");
-	
+
 		echo '<p class="success">Icon Deleted.</p>' . "\n";
 	}
 	else {
 		if (is_uploaded_file ($_FILES['image']['tmp_name'])) {
 			$i = $_FILES['image']['name'];
-			
+
 			$e = pathinfo($i);
 			$e = $e[extension];
-				
+
 			if (move_uploaded_file ($_FILES['image']['tmp_name'],"./uploads/".$username.".".$e.""))	{
 				$query2 = "UPDATE user SET picture='".$username.".".$e."' WHERE username='$u'";
 				$r2 = mysql_query($query2) or die ("uh oh");
-				
+
 				echo '<p class="success">Icon Uploaded.</p>' . "\n";
 			}
 			else {
 				echo '<p class="error">Error uploading icon</p>' . "\n";
 				$i = '';
 			}
-			
+
 		}
 		else
 			$i = '';
@@ -100,21 +97,21 @@ if (isset($_POST['pass'])) {
 	$oldpass = $_POST['oldpass'];
 	$oldpass2 = $_POST['oldpass2'];
 	$newpass = $_POST['newpass'];
-	$length = strlen($newpass);	
-	
+	$length = strlen($newpass);
+
 	$query = "SELECT password FROM login WHERE username='$u'";
 	$r = mysql_query($query) or die ("Error with query.");
-	
+
 	$row= mysql_fetch_array($r);
-	
+
 	if ($oldpass != $oldpass2)
 		echo '<p class="error">Your old password could not be confirmed.</p>' . "\n";
 	else if ($row['password'] == sha1($oldpass)) {
 		if ($length < 6)
 			echo '<p class="error">New password must be at least 6 characters.</p>' . "\n";
-		else { 
+		else {
 			echo '<p class="success">Password successfully changed.</p>' . "\n";
-		
+
 			$query = "UPDATE login SET password=sha1('" .$newpass. "') WHERE username='$u'";
 			$r = mysql_query($query) or die ("Error with query.");
 		}
@@ -136,7 +133,7 @@ if (isset($_POST['user'])) {
 	$cs = $_POST['change_screenname'];
 	$w = $_POST['website'];
 	$cw = $_POST['change_website'];
-	
+
 	if ($cf == 'y')	{
 		$query = "UPDATE user SET fullname='$f' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
@@ -145,19 +142,19 @@ if (isset($_POST['user'])) {
 	if ($cn == "y")	{
 		$query = "UPDATE user SET nickname='$n' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
-		
+
 		$query = "SELECT post_name FROM pref WHERE username='$u'";
 		$r = mysql_query($query);
 		$pn = mysql_fetch_row($r);
-		
+
 		if ($n == '' && $pn[0] == 'nickname') {
 			$query = "UPDATE pref SET post_name='username' WHERE username='$u'";
 			$r = mysql_query($query) or die ("Error with query.");
 		}
-		
+
 		echo '<p class="success">Nickname changed.</p>' . "\n";
 		$_SESSION['nickname'] = $n;
-		
+
 	}
 	if ($ce == "y")	{
 		$query = "UPDATE user SET email='$e' WHERE username='$u'";
@@ -180,11 +177,11 @@ if (isset($_POST['user'])) {
 
 if (isset($_POST['pref'])) {
 	$pn = $_POST['postname'];
-	
+
 	$query = "SELECT nickname FROM user WHERE username='$u'";
 	$nn = mysql_query($query);
 	$n = mysql_fetch_row($nn);
-	
+
 	if (($pn == "nickname" && $n[0] != "") || $pn == "username") {
 		$query = "UPDATE pref SET post_name='$pn' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
@@ -199,11 +196,11 @@ if (isset($_POST['pref'])) {
 
 if (isset($_POST['newmotd'])) {
 	$motd = $_POST['motd'];
-	
+
 	if ($motd != '') {
 		$query = "UPDATE options SET motd='$motd'";
 		$r = @mysql_query($query);
-		
+
 		echo '<p class="success">Message of the Day changed.</p>' . "\n";
 	}
 }
@@ -260,11 +257,11 @@ if ($_SESSION['access'] == "admin")
     echo '<table>' . "\n";
 	echo '<tr><td colspan="3"><b>Admin Options:</b></td></tr>' . "\n";
 	echo '<tr><td>[ <a href="newuser.php">Create User</a> ]</td><td colspan="2">&nbsp;</td></tr>' . "\n";
-	
+
 	$query2 = "SELECT username FROM login WHERE access!='admin' ORDER BY username";
 	$r2 = mysql_query($query2) or die ("Error with query.");
 	$num_rows = mysql_num_rows($r2);
-	
+
 	if ($num_rows > 1)
 	{
 		echo '<form action="' .basename($PHP_SELF). '" method="post" name="resetUser" onsubmit="return rUser();">' . "\n";
@@ -272,41 +269,41 @@ if ($_SESSION['access'] == "admin")
 		echo '  <td>[ Reset User ]</td>' . "\n";
 		echo '  <td><select name="user">' . "\n";
 		echo '    <option selected="selected" value=""></option>' . "\n";
-		
+
 		for ($i = 0; $i < $num_rows; $i++)
 		{
 			$row2 = mysql_fetch_array($r2);
 			if ($row2['username'] != $u)
 				echo '    <option value="' .$row2['username']. '">' .$row2['username']. '</option>' . "\n";
 		}
-		
+
 		echo '  </select></td>' . "\n";
 		echo '  <td><input name="reset" type="submit" value="Reset"></td>' . "\n";
 		echo '</tr>' . "\n";
 		echo '</form>' . "\n";
-		
+
 		echo '<form action="' .basename($PHP_SELF). '" method="post" name="deleteUser" onsubmit="return dUser();">' . "\n";
 		echo '<tr>' . "\n";
 		echo '  <td>[ Delete User ]</td>' . "\n";
 		echo '  <td><select name="user">' . "\n";
 		echo '    <option selected="selected" value=""></option>' . "\n";
-		
+
 		$query2 = "SELECT username FROM login WHERE access!='admin' ORDER BY username";
 		$r2 = mysql_query($query2) or die ("Error with query.");
-	
+
 		for ($i = 0; $i < $num_rows; $i++)
 		{
 			$row2 = mysql_fetch_array($r2);
 			if ($row2['username'] != $u)
 				echo '    <option value="' .$row2['username']. '">' .$row2['username']. '</option>' . "\n";
 		}
-		
+
 		echo '  </select></td>' . "\n";
 		echo '  <td><input name="delete" type="submit" value="Delete"></td>' . "\n";
 		echo '</tr>' . "\n";
 		echo '</form>' . "\n";
 	}
-    
+
 	echo '<tr><td>[ <a href="modify.php">Modify News</a> ]</td><td colspan="2">&nbsp;</td></tr>' . "\n";
 
 	echo '<tr><form action="' .basename($PHP_SELF). '" method="post" name="motd">' . "\n";
@@ -314,9 +311,9 @@ if ($_SESSION['access'] == "admin")
 	echo '  <td><input name="motd" type="text" value="' .$motd. '" maxlength="50"></td>' . "\n";
 	echo '  <td><input name="newmotd" type="submit" value="Change"></td>' . "\n";
 	echo '</form></tr>' . "\n";
-	
+
 	echo '<tr><td colspan="3"><a href="http://www.bong-it.com/mysql/index.php?u='.$u.'">phpMyAdmin (Database)</a></td></tr>' . "\n";
-	
+
 	echo '</table>' . "\n";
 	echo '<br />' . "\n";
 }
@@ -338,7 +335,7 @@ if ($imgrow[0] != "") {
 else {
 	echo '<tr><td>You have no post icon uploaded.</td></tr>' . "\n";
 }
-	
+
 echo '<tr><td><input type="file" name="image" /></td></tr>' . "\n";
 echo '<tr><td><input name="icon" type="submit" value="Submit" /></td></tr>' . "\n";
 ?>

@@ -1,13 +1,9 @@
-<? 
+<?
 
 include("include/include.php");
 $title = 'Modify News';
 
-
-
 session_start();
-session_register("username");
-session_register("access");
 
 $a = $_SESSION['access'];
 $u = $_SESSION['username'];
@@ -41,21 +37,21 @@ include("include/header.php");
 if (isset($_POST['submit'])) {
 	$r2 = @mysql_query($query) or die ("Error with query.");
 	$num_rows2 = mysql_num_rows($r2);
-	
+
 	for ($i = 0; $i < $num_rows2; $i++)	{
-		
+
 		$row2 = mysql_fetch_array($r2);
-		
+
 		$check = $row2['newsID'] . "-keeprem";
 		if ($_POST[$check] == "r") {
 			$query3 = "DELETE FROM news WHERE newsID='".$row2['newsID']."'";
 			$r3 = mysql_query($query3) or die ("Error with delete.");
 			echo '<p class="success">Deleted from News.</p>' . "\n";
-			
+
 			$query3 = "SELECT newsID FROM comments WHERE newsID='".$row2['newsID']."'";
 			$r3 = mysql_query($query3) or die ("Error with delete.");
 			$row3 = mysql_fetch_array($r3);
-			
+
 			if ($row2) {
 				$query3 = "DELETE FROM comments WHERE newsID='".$row2['newsID']."'";
 				$r3 = mysql_query($query3) or die ("Error with delete.");
@@ -73,7 +69,7 @@ if (isset($_POST['submit'])) {
 				$query3 = "UPDATE news SET subject='$ns' WHERE newsID='$n'";
 				$r3 = mysql_query($query3) or die ("Error with query.");
 			}
-			
+
 			// Update modified body
 			$b = $row2['newsID'] . '-body';
 			$nb = $_POST[$b];
@@ -81,7 +77,7 @@ if (isset($_POST['submit'])) {
 				$query3 = "UPDATE news SET body='$nb' WHERE newsID='$n'";
 				$r3 = mysql_query($query3) or die ("Error with query.");
 			}
-			
+
 			if ( (stripslashes($nb) != $row2['body']) || ($ns != $row2['subject']) ) {
 				echo '<p class="success">News #" .$n. " changed.</p>' . "\n";
 			}
@@ -105,7 +101,7 @@ echo '<p class="title">Modify News</p>' . "\n";
 for ($i = 0; $i < $num_rows; $i++) {
 	$row = mysql_fetch_array($r);
 	$date = $row[4];
-  
+
 	echo '<table>' . "\n";
 	echo '  <tr>' . "\n";
 	echo '    <td>Subject:</td>' . "\n";
@@ -115,7 +111,7 @@ for ($i = 0; $i < $num_rows; $i++) {
 	echo '  <tr>' . "\n";
 	echo '    <td colspan="2"><textarea name="'.$row['newsID'].'-body" cols="50" rows="10">' .$row['body']. '</textarea></td>' . "\n";
 	echo '  </tr>' . "\n";
-	
+
 	echo '  <tr>' . "\n";
 	echo '    <td>Keep <input name="' .$row['newsID']. '-keeprem" type="radio" value="k" checked="checked" /></td>' . "\n";
 	echo '    <td>Remove <input name="' .$row['newsID']. '-keeprem" type="radio" value="r" /></td>' . "\n";

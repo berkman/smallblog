@@ -4,11 +4,6 @@ include("include/include.php");
 $title = 'Log In';
 
 session_start();
-//session_register("username");
-//session_register("nickname");
-//session_register("access");
-//session_register("login");
-
 
 $t = "SELECT CURRENT_TIMESTAMP() FROM login";
 //$tr = @mysql_query ($t);
