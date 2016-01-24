@@ -3,7 +3,6 @@
 include("include/include.php");
 $title = 'Log In';
 
-
 session_start();
 session_register("username");
 session_register("nickname");
@@ -11,10 +10,11 @@ session_register("access");
 session_register("login");
 
 
-
 $t = "SELECT CURRENT_TIMESTAMP() FROM login";
-$tr = @mysql_query ($t);
-$trow = mysql_fetch_row ($tr);
+//$tr = @mysql_query ($t);
+//$trow = mysql_fetch_row ($tr);
+$tr = pg_query ($t);
+$trow = pg_fetch_row ($tr);
 
 $_SESSION['login'] = $trow[0];
 
@@ -38,16 +38,21 @@ if (isset($_POST['submit'])) {
 		
 	if ($u && $p) {
 		$query = "SELECT username, access FROM login WHERE username='$u' AND password=sha1('$p')";
-		$r = @mysql_query ($query);
-		$row = mysql_fetch_array ($r);
+		//$r = @mysql_query ($query);
+		//$row = mysql_fetch_array ($r);
+		$r = pg_query($query);
+		$row = pg_fetch_array($r);
 		
 		if ($row) {
 			$query2 = "SELECT nickname FROM user WHERE username='$u'";
-			$r2 = @mysql_query ($query2);
-			$row2 = mysql_fetch_array ($r2);
+			//$r2 = @mysql_query ($query2);
+			//$row2 = mysql_fetch_array ($r2);
+			$r2 = pg_query($query2);
+			$row2 = pg_fetch_array($r2);
 			
 			$query3 = "UPDATE login SET loggedin='y' WHERE username='$u'";
-			$r3 = @mysql_query ($query3);
+			//$r3 = @mysql_query ($query3);
+			$r3 = pg_query($query3);
 			
 			$_SESSION['username'] = $row['username'];
 			$_SESSION['access'] = $row['access'];
