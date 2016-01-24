@@ -2,3 +2,4 @@ berkPHP.txt
 vendor/
 db_backups/
 layout/
+.DS_Store

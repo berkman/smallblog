@@ -32,7 +32,8 @@ if (isset($_POST['submit'])) {
 
 
 	if ($u && $p) {
-		$query = "SELECT username, access FROM login WHERE username='$u' AND password=sha1('$p')";
+		//$query = "SELECT username, access FROM login WHERE username='$u' AND password=sha1('$p')";
+		$query = "SELECT username, access FROM login WHERE username='$u'";
 		//$r = @mysql_query ($query);
 		//$row = mysql_fetch_array ($r);
 		$r = pg_query($query);
