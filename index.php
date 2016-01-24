@@ -7,13 +7,11 @@ session_start();
 
 $u = $_SESSION['username'];
 $n = $_SESSION['nickname'];
-//$u = "username";
-//$n = "nickname";
 //$motd = '';
 
 
 // Get the news from the database.
-//$query = "SELECT newsID, subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y'), comment_fl, image FROM news ORDER BY newsID DESC";
+//$query = "SELECT newsID, subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y'), comment_fl, image FROM public.news ORDER BY newsID DESC";
 //$r = mysql_query($query) or die ("Error getting news.");
 //$num_rows = mysql_num_rows($r);
 
@@ -35,7 +33,7 @@ $n = $_SESSION['nickname'];
 
 /*
 // Determine who else is logged into the website.
-$query4 = "SELECT username FROM login WHERE loggedin='y'";
+$query4 = "SELECT username FROM public.login WHERE loggedin='y'";
 $r4 = mysql_query($query4) or die ("Error with query4.");
 $row4 = mysql_fetch_array($r4);
 $logged = mysql_num_rows($r4);
@@ -48,7 +46,7 @@ include ('include/header.php');
 
 /*
 // Check for user's birthday.
-$bday = "SELECT username, nickname FROM user WHERE DATE_FORMAT(dob, '%b %e') = DATE_FORMAT(NOW(), '%b %e')";
+$bday = "SELECT username, nickname FROM public.user WHERE DATE_FORMAT(dob, '%b %e') = DATE_FORMAT(NOW(), '%b %e')";
 $bresult = @mysql_query($bday);
 $todaybday = mysql_fetch_array($bresult);
 
@@ -77,7 +75,7 @@ if ($motd != '') {
 // Logged in user.
 if ($u != "") {
 	// Retrieve the date from the last users login.
-	//$query3 = "SELECT DATE_FORMAT(last_login, '%W, %M %d, %Y at %h:%i %p') FROM login WHERE username='$u'";
+	//$query3 = "SELECT DATE_FORMAT(last_login, '%W, %M %d, %Y at %h:%i %p') FROM public.login WHERE username='$u'";
 	//$r3 = @mysql_query ($query3);
 	//$row3 = mysql_fetch_array($r3);
 
@@ -131,13 +129,13 @@ for ($i = 0; $i < $show; $i++) {
 
 
 	// Get the users nickname and e-mail.
-	$query3 = "SELECT nickname, email, picture FROM user WHERE username='" . $row['username'] . "'";
+	$query3 = "SELECT nickname, email, picture FROM public.user WHERE username='" . $row['username'] . "'";
 	$r3 = mysql_query($query3, $link) or die ("Error with query.");
 	$e = mysql_fetch_array($r3);
 
 
 	// Determine the users preference for their post name.
-	$query3 = "SELECT post_name FROM pref WHERE username='" . $row['username'] . "'";
+	$query3 = "SELECT post_name FROM public.pref WHERE username='" . $row['username'] . "'";
 	$r3 = mysql_query($query3);
 	$p = mysql_fetch_array($r3);
 
@@ -186,7 +184,7 @@ for ($i = 0; $i < $show; $i++) {
 
 	// Print the comments link, if there are comments.
 	if ($row['comment_fl'] == 'y') {
-		$query_cmnt = "SELECT cmntID FROM comments WHERE newsID='".$row['newsID']."'";
+		$query_cmnt = "SELECT cmntID FROM public.comments WHERE newsID='".$row['newsID']."'";
 		$cmnt_rslt = mysql_query($query_cmnt) or die ("Error with query.");
 		$num_cmnts = mysql_num_rows($cmnt_rslt);
 		echo '  <tr><td colspan="3"><a href="comments.php?newsID=' . $row['newsID'] . '">Comments ('.$num_cmnts.')</a></td></tr>' . "\n";

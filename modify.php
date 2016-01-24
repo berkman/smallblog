@@ -18,9 +18,9 @@ if ($u == "") {
 
 
 if ($a != "admin")
-	$query = "SELECT newsID, username, subject, body, DATE_FORMAT(posted, '%W, %M %d, %Y') FROM news WHERE username='$u' ORDER BY newsID";
+	$query = "SELECT newsID, username, subject, body, DATE_FORMAT(posted, '%W, %M %d, %Y') FROM public.news WHERE username='$u' ORDER BY newsID";
 else
-	$query = "SELECT newsID, username, subject, body, DATE_FORMAT(posted, '%W, %M %d, %Y') FROM news ORDER BY newsID";
+	$query = "SELECT newsID, username, subject, body, DATE_FORMAT(posted, '%W, %M %d, %Y') FROM public.news ORDER BY newsID";
 
 
 $r = @mysql_query($query) or die ("Error with query.");
@@ -44,16 +44,16 @@ if (isset($_POST['submit'])) {
 
 		$check = $row2['newsID'] . "-keeprem";
 		if ($_POST[$check] == "r") {
-			$query3 = "DELETE FROM news WHERE newsID='".$row2['newsID']."'";
+			$query3 = "DELETE FROM public.news WHERE newsID='".$row2['newsID']."'";
 			$r3 = mysql_query($query3) or die ("Error with delete.");
 			echo '<p class="success">Deleted from News.</p>' . "\n";
 
-			$query3 = "SELECT newsID FROM comments WHERE newsID='".$row2['newsID']."'";
+			$query3 = "SELECT newsID FROM public.comments WHERE newsID='".$row2['newsID']."'";
 			$r3 = mysql_query($query3) or die ("Error with delete.");
 			$row3 = mysql_fetch_array($r3);
 
 			if ($row2) {
-				$query3 = "DELETE FROM comments WHERE newsID='".$row2['newsID']."'";
+				$query3 = "DELETE FROM public.comments WHERE newsID='".$row2['newsID']."'";
 				$r3 = mysql_query($query3) or die ("Error with delete.");
 				echo '<p class="success">Deleted from Comments.</p>' . "\n";
 			}
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 			$s = $row2['newsID'] . '-sub';
 			$ns = $_POST[$s];
 			if ($ns != $row2['subject']) {
-				$query3 = "UPDATE news SET subject='$ns' WHERE newsID='$n'";
+				$query3 = "UPDATE public.news SET subject='$ns' WHERE newsID='$n'";
 				$r3 = mysql_query($query3) or die ("Error with query.");
 			}
 
@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 			$b = $row2['newsID'] . '-body';
 			$nb = $_POST[$b];
 			if (stripslashes($nb) != $row2['body']) {
-				$query3 = "UPDATE news SET body='$nb' WHERE newsID='$n'";
+				$query3 = "UPDATE public.news SET body='$nb' WHERE newsID='$n'";
 				$r3 = mysql_query($query3) or die ("Error with query.");
 			}
 

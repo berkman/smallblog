@@ -13,7 +13,7 @@ echo '<p class="title">Options</p>' . "\n";
 if (isset($_POST['reset'])) {
 	$user = $_GET['u'];
 
-	$query = "SELECT email, nickname FROM user WHERE username='$user'";
+	$query = "SELECT email, nickname FROM public.user WHERE username='$user'";
 	$r = mysql_query($query) or die ("Error with query.");
 	$row = mysql_fetch_array($r);
 
@@ -26,12 +26,12 @@ if (isset($_POST['reset'])) {
 		$p = $p . rand(1,9);
 	}
 
-	$query2 = "UPDATE login SET password=SHA1($p) WHERE username='$user'";
+	$query2 = "UPDATE public.login SET password=SHA1($p) WHERE username='$user'";
 	$r2 = mysql_query($query2) or die ("Error with query.");
 
 	$to = $row['email'];
-	$subject = "Your bong-it.com password";
-	$body = $user . ", you're a dumbass.  The server has reset your password.  Your new password is: " .$p. "\n\nThanks,\nbong-it.com admin";
+	$subject = "Your password";
+	$body = $user . ", The server has reset your password.  Your new password is: " .$p. "\n\nThanks,\nadmin";
 	if (mail('berkman@bong-it.com', $subject, $body, 'From: admin@bong-it.com'))
 	   echo '<p class="success">'.$user.' reset, message sent.</p>' . "\n";
 	else
@@ -41,15 +41,15 @@ if (isset($_POST['reset'])) {
 if (isset($_POST['delete'])) {
 	$user = $_GET['u'];
 
-	$query = "DELETE FROM comments WHERE username='$user'";
+	$query = "DELETE FROM public.comments WHERE username='$user'";
 	$c = mysql_query($query) or die ("Error with comments table.");
-	$query = "DELETE FROM login WHERE username='$user'";
+	$query = "DELETE FROM public.login WHERE username='$user'";
 	$l = mysql_query($query) or die ("Error with login table.");
-	$query = "DELETE FROM news WHERE username='$user'";
+	$query = "DELETE FROM public.news WHERE username='$user'";
 	$n = mysql_query($query) or die ("Error with news table.");
-	$query = "DELETE FROM pref WHERE username='$user'";
+	$query = "DELETE FROM public.pref WHERE username='$user'";
 	$p = mysql_query($query) or die ("Error with pref table.");
-	$query = "DELETE FROM user WHERE username='$user'";
+	$query = "DELETE FROM public.user WHERE username='$user'";
 	$r = mysql_query($query) or die ("Error with user table.");
 
 	if ($c && $l && $n && $p && $r)
@@ -63,7 +63,7 @@ if (isset($_POST['icon'])) {
 	$d = $_POST['deleteIcon'];
 
 	if ($d == 'y') {
-		$query2 = "UPDATE user SET picture='' WHERE username='$u'";
+		$query2 = "UPDATE public.user SET picture='' WHERE username='$u'";
 		$r2 = mysql_query($query2) or die ("uh oh");
 
 		echo '<p class="success">Icon Deleted.</p>' . "\n";
@@ -76,7 +76,7 @@ if (isset($_POST['icon'])) {
 			$e = $e[extension];
 
 			if (move_uploaded_file ($_FILES['image']['tmp_name'],"./uploads/".$username.".".$e.""))	{
-				$query2 = "UPDATE user SET picture='".$username.".".$e."' WHERE username='$u'";
+				$query2 = "UPDATE public.user SET picture='".$username.".".$e."' WHERE username='$u'";
 				$r2 = mysql_query($query2) or die ("uh oh");
 
 				echo '<p class="success">Icon Uploaded.</p>' . "\n";
@@ -98,7 +98,7 @@ if (isset($_POST['pass'])) {
 	$newpass = $_POST['newpass'];
 	$length = strlen($newpass);
 
-	$query = "SELECT password FROM login WHERE username='$u'";
+	$query = "SELECT password FROM public.login WHERE username='$u'";
 	$r = mysql_query($query) or die ("Error with query.");
 
 	$row= mysql_fetch_array($r);
@@ -111,7 +111,7 @@ if (isset($_POST['pass'])) {
 		else {
 			echo '<p class="success">Password successfully changed.</p>' . "\n";
 
-			$query = "UPDATE login SET password=sha1('" .$newpass. "') WHERE username='$u'";
+			$query = "UPDATE public.login SET password=sha1('" .$newpass. "') WHERE username='$u'";
 			$r = mysql_query($query) or die ("Error with query.");
 		}
 	}
@@ -134,20 +134,20 @@ if (isset($_POST['user'])) {
 	$cw = $_POST['change_website'];
 
 	if ($cf == 'y')	{
-		$query = "UPDATE user SET fullname='$f' WHERE username='$u'";
+		$query = "UPDATE public.user SET fullname='$f' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
 		echo '<p class="success">Fullname changed.</p>' . "\n";
 	}
 	if ($cn == "y")	{
-		$query = "UPDATE user SET nickname='$n' WHERE username='$u'";
+		$query = "UPDATE public.user SET nickname='$n' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
 
-		$query = "SELECT post_name FROM pref WHERE username='$u'";
+		$query = "SELECT post_name FROM public.pref WHERE username='$u'";
 		$r = mysql_query($query);
 		$pn = mysql_fetch_row($r);
 
 		if ($n == '' && $pn[0] == 'nickname') {
-			$query = "UPDATE pref SET post_name='username' WHERE username='$u'";
+			$query = "UPDATE public.pref SET post_name='username' WHERE username='$u'";
 			$r = mysql_query($query) or die ("Error with query.");
 		}
 
@@ -156,17 +156,17 @@ if (isset($_POST['user'])) {
 
 	}
 	if ($ce == "y")	{
-		$query = "UPDATE user SET email='$e' WHERE username='$u'";
+		$query = "UPDATE public.user SET email='$e' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
 		echo '<p class="success">E-mail changed.</p>' . "\n";
 	}
 	if ($cs == "y")	{
-		$query = "UPDATE user SET screenname='$s' WHERE username='$u'";
+		$query = "UPDATE public.user SET screenname='$s' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
 		echo '<p class="success">Screenname changed.</p>' . "\n";
 	}
 	if ($cw == "y") {
-		$query = "UPDATE user SET website='$w' WHERE username='$u'";
+		$query = "UPDATE public.user SET website='$w' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
 		echo '<p class="success">Website changed.</p>' . "\n";
 	}
@@ -177,12 +177,12 @@ if (isset($_POST['user'])) {
 if (isset($_POST['pref'])) {
 	$pn = $_POST['postname'];
 
-	$query = "SELECT nickname FROM user WHERE username='$u'";
+	$query = "SELECT nickname FROM public.user WHERE username='$u'";
 	$nn = mysql_query($query);
 	$n = mysql_fetch_row($nn);
 
 	if (($pn == "nickname" && $n[0] != "") || $pn == "username") {
-		$query = "UPDATE pref SET post_name='$pn' WHERE username='$u'";
+		$query = "UPDATE public.pref SET post_name='$pn' WHERE username='$u'";
 		$r = mysql_query($query) or die ("Error with query.");
 		echo '<p class="success">Preferences changed.</p>' . "\n";
 	}
@@ -197,7 +197,7 @@ if (isset($_POST['newmotd'])) {
 	$motd = $_POST['motd'];
 
 	if ($motd != '') {
-		$query = "UPDATE options SET motd='$motd'";
+		$query = "UPDATE public.options SET motd='$motd'";
 		$r = @mysql_query($query);
 
 		echo '<p class="success">Message of the Day changed.</p>' . "\n";
@@ -207,13 +207,13 @@ if (isset($_POST['newmotd'])) {
 
 
 
-$query = "SELECT * FROM user WHERE username='$u'";
+$query = "SELECT * FROM public.user WHERE username='$u'";
 //$r = mysql_query($query) or die ("Error with query.");
 //$row = mysql_fetch_array($r);
 $r = pg_query($query) or die ("Error with query.");
 $row = pg_fetch_array($r);
 
-$query3 = "SELECT * FROM pref WHERE username='$u'";
+$query3 = "SELECT * FROM public.pref WHERE username='$u'";
 //$r3 = mysql_query($query3) or die ("Error with query.");
 //$postn = mysql_fetch_array($r3);
 $r3 = pg_query($query3) or die ("Error with query.");
@@ -304,7 +304,7 @@ if ($_SESSION['access'] == "admin")
 }
 
 
-$img = "SELECT picture FROM user WHERE username='$u'";
+$img = "SELECT picture FROM public.user WHERE username='$u'";
 $imgr = mysql_query($img);
 $imgrow = mysql_fetch_array($imgr);
 
