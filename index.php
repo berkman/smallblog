@@ -3,7 +3,7 @@
 include("include/include.php");
 
 // Register the session variables.
-//session_start();
+session_start();
 //session_register("username");
 //session_register("nickname");
 

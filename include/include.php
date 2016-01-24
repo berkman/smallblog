@@ -19,6 +19,6 @@ $port =       $_ENV["POSTGRES_PORT"];
 $user =       $_ENV["POSTGRES_USERNAME"];
 $password =   $_ENV["POSTGRES_PASSWORD"];
 
-$link = pg_connect("$dbname $host $port $user $password sslmode=require");
+$link = pg_connect("dbname={$dbname} host={$host} port={$port} user={$user} password={$password} sslmode=require");
 
 ?>
