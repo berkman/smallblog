@@ -9,7 +9,7 @@ $a = $_SESSION['access'];
 $u = $_SESSION['username'];
 
 if ($u == "") {
-	header ("Location: http://" . $_SERVER['HTTP_HOST'] .
+	header ("Location: https://" . $_SERVER['HTTP_HOST'] .
 				dirname($SERVER['PHP_SELF']) . "/");
 	exit();
 }

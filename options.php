@@ -297,8 +297,6 @@ if ($_SESSION['access'] == "admin")
 	echo '  <td><input name="newmotd" type="submit" value="Change"></td>' . "\n";
 	echo '</form></tr>' . "\n";
 
-	echo '<tr><td colspan="3"><a href="http://www.bong-it.com/mysql/index.php?u='.$u.'">phpMyAdmin (Database)</a></td></tr>' . "\n";
-
 	echo '</table>' . "\n";
 	echo '<br />' . "\n";
 }
