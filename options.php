@@ -78,9 +78,9 @@ if (isset($_POST['icon'])) {
 			$e = pathinfo($i);
 			$e = $e[extension];
 
-			if (move_uploaded_file ($_FILES['image']['tmp_name'],"./uploads/".$username.".".$e.""))	{
-				$query2 = "UPDATE public.user SET picture='".$username.".".$e."' WHERE username='$u'";
-				$r2 = pg_query($query2) or die ("uh oh");
+			if (move_uploaded_file ($_FILES['image']['tmp_name'],"./uploads/".$u.".".$e.""))	{
+				$query2 = "UPDATE public.user SET picture='".$u.".".$e."' WHERE username='$u'";
+				$r2 = pg_query($query2) or die ("error uploading image");
 
 				echo '<p class="success">Icon Uploaded.</p>' . "\n";
 			}
