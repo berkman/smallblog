@@ -11,32 +11,29 @@ $motd = '';
 
 
 // Get the news from the database.
-//$query = "SELECT newsID, subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y'), comment_fl, image FROM public.news ORDER BY newsID DESC";
-//$r = pg_query($query) or die ("Error getting news.");
-//$num_rows = pg_num_rows($r);
+$query = "SELECT news_id, subject, username, body, posted, comment_fl, image FROM public.news ORDER BY news_id DESC";
+$r = pg_query($query) or die ("Error getting news");
+$num_rows = pg_num_rows($r);
 
 
 // Determine how many news items to display on the main page.
-//$query2 = "SELECT show_num FROM options";
-//$r2 = pg_query($query2) or die ("Error getting number of news items.");
-//$row = pg_fetch_array($r2);
-//$show_num = $row[0];
+$query2 = "SELECT show_num FROM options";
+$r2 = pg_query($query2) or die ("Error getting number of news items");
+$row = pg_fetch_array($r2);
+$show_num = $row[0];
 
-//if ($num_rows < $show_num) {
-//	$show = $num_rows;
-//	$archive_link = false;
-//}
-//else {
-//	$show = $show_num;
-//	$archive_link = true;
-//}
+if ($num_rows < $show_num) {
+	$show = $num_rows;
+	$archive_link = false;
+}
+else {
+	$show = $show_num;
+	$archive_link = true;
+}
 
 
 // Determine who else is logged into the website.
 $query4 = "SELECT username FROM public.login WHERE loggedin='y'";
-//$r4 = pg_query($query4) or die ("Error with query4.");
-//$row4 = pg_fetch_array($r4);
-//$logged = pg_num_rows($r4);
 $r4 = pg_query($query4) or die ("Error with query4.");
 $row4 = pg_fetch_array($r4);
 $logged = pg_num_rows($r4);
@@ -46,9 +43,8 @@ $logged = pg_num_rows($r4);
 include ('include/header.php');
 
 
-/*
 // Check for user's birthday.
-$bday = "SELECT username, nickname FROM public.user WHERE DATE_FORMAT(dob, '%b %e') = DATE_FORMAT(NOW(), '%b %e')";
+$bday = "SELECT username, nickname FROM public.user WHERE date_part('day', current_timestamp) = date_part('day', dob::date) AND date_part('month', current_timestamp) = date_part('month', dob::date)";
 $bresult = pg_query($bday);
 $todaybday = pg_fetch_array($bresult);
 
@@ -56,7 +52,6 @@ if ($todaybday) {
 	$motd = 'Happy Birthday ' .$todaybday['nickname']. '!';
 }
 
-*/
 
 
 // Message of the day.
