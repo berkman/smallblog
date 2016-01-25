@@ -1,4 +1,4 @@
-Simple Blog
+Small Blog
 =======
 
-Simple blogging system
+Small blogging system
