@@ -12,13 +12,13 @@ $motd = '';
 
 // Get the news from the database.
 $query = "SELECT news_id, subject, username, body, posted, comment_fl, image FROM public.news ORDER BY news_id DESC";
-$r = pg_query($query) or die ("Error getting news");
+$r = pg_query($query) or die ("Error with query");
 $num_rows = pg_num_rows($r);
 
 
 // Determine how many news items to display on the main page.
 $query2 = "SELECT show_num FROM options";
-$r2 = pg_query($query2) or die ("Error getting number of news items");
+$r2 = pg_query($query2) or die ("Error with query2");
 $row = pg_fetch_array($r2);
 $show_num = $row[0];
 
@@ -33,8 +33,8 @@ else {
 
 
 // Determine who else is logged into the website.
-$query4 = "SELECT username FROM public.login WHERE loggedin='y'";
-$r4 = pg_query($query4) or die ("Error with query4.");
+$query3 = "SELECT username FROM public.login WHERE loggedin='y'";
+$r4 = pg_query($query3) or die ("Error with query3.");
 $row4 = pg_fetch_array($r4);
 $logged = pg_num_rows($r4);
 
@@ -45,7 +45,7 @@ include ('include/header.php');
 
 // Check for user's birthday.
 $bday = "SELECT username, nickname FROM public.user WHERE date_part('day', current_timestamp) = date_part('day', dob::date) AND date_part('month', current_timestamp) = date_part('month', dob::date)";
-$bresult = pg_query($bday);
+$bresult = pg_query($bday) or die ("Error with bday query");
 $todaybday = pg_fetch_array($bresult);
 
 if ($todaybday) {
@@ -57,7 +57,7 @@ if ($todaybday) {
 // Message of the day.
 if (!$todaybday) {
 	$query5 = "SELECT motd FROM public.options";
-	$mess = pg_query($query5);
+	$mess = pg_query($query5) or die ("Error with query5");
 	$temp = pg_fetch_array($mess);
 
 	if ($temp) {
@@ -75,7 +75,7 @@ if ($motd != '') {
 if ($u != "") {
 	// Retrieve the date from the last users login.
 	$query3 = "SELECT last_login FROM public.login WHERE username='$u'";
-	$r3 = pg_query($query3);
+	$r3 = pg_query($query3) or die ("Error with query3");
 	$row3 = pg_fetch_array($r3);
 
 
@@ -129,13 +129,13 @@ for ($i = 0; $i < $show; $i++) {
 
 	// Get the users nickname and e-mail.
 	$query3 = "SELECT nickname, email, picture FROM public.user WHERE username='" . $row['username'] . "'";
-	$r3 = pg_query($query3, $link) or die ("Error with query.");
+	$r3 = pg_query($query3, $link) or die ("Error with query3.");
 	$e = pg_fetch_array($r3);
 
 
 	// Determine the users preference for their post name.
-	$query3 = "SELECT post_name FROM public.pref WHERE username='" . $row['username'] . "'";
-	$r3 = pg_query($query3);
+	$query4 = "SELECT post_name FROM public.pref WHERE username='" . $row['username'] . "'";
+	$r3 = pg_query($query4) or die ("Error with query4");
 	$p = pg_fetch_array($r3);
 
 
