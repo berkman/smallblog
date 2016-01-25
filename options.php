@@ -197,11 +197,11 @@ if (isset($_POST['pref'])) {
 
 
 if (isset($_POST['newmotd'])) {
-	$motd = $_POST['motd'];
+	$motd = $_POST['newmotd'];
 
 	if ($motd != '') {
 		$query = "UPDATE public.options SET motd='$motd'";
-		$r = @pg_query($query);
+		$r = @pg_query($query) or die ("Error with MOTD query.");
 
 		echo '<p class="success">Message of the Day changed.</p>' . "\n";
 	}
