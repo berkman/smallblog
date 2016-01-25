@@ -5,9 +5,7 @@ $title = 'Log In';
 
 session_start();
 
-//$t = "SELECT CURRENT_TIMESTAMP() FROM login";
-//$tr = @mysql_query ($t);
-//$trow = mysql_fetch_row ($tr);
+
 $t = "SELECT current_timestamp FROM public.login";
 $tr = pg_query($t);
 $trow = pg_fetch_row($tr);
@@ -32,22 +30,17 @@ if (isset($_POST['submit'])) {
 
 
 	if ($u && $p) {
-		//$query = "SELECT username, access FROM login WHERE username='$u' AND password=sha1('$p')";
+		//$query = "SELECT username, access FROM public.login WHERE username='$u' AND password=sha1('$p')";
 		$query = "SELECT username, access FROM public.login WHERE username='$u'";
-		//$r = @mysql_query ($query);
-		//$row = mysql_fetch_array ($r);
 		$r = pg_query($query);
 		$row = pg_fetch_array($r);
 
 		if ($row) {
 			$query2 = "SELECT nickname FROM public.user WHERE username='$u'";
-			//$r2 = @mysql_query ($query2);
-			//$row2 = mysql_fetch_array ($r2);
 			$r2 = pg_query($query2);
 			$row2 = pg_fetch_array($r2);
 
 			$query3 = "UPDATE public.login SET loggedin='y', last_login='".$_SESSION['login']."' WHERE username='$u'";
-			//$r3 = @mysql_query ($query3);
 			$r3 = pg_query($query3);
 
 			$_SESSION['username'] = $row['username'];

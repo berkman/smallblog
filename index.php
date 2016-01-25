@@ -12,14 +12,14 @@ $n = $_SESSION['nickname'];
 
 // Get the news from the database.
 //$query = "SELECT newsID, subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y'), comment_fl, image FROM public.news ORDER BY newsID DESC";
-//$r = mysql_query($query) or die ("Error getting news.");
-//$num_rows = mysql_num_rows($r);
+//$r = pg_query($query) or die ("Error getting news.");
+//$num_rows = pg_num_rows($r);
 
 
 // Determine how many news items to display on the main page.
 //$query2 = "SELECT show_num FROM options";
-//$r2 = mysql_query($query2) or die ("Error getting number of news items.");
-//$row = mysql_fetch_array($r2);
+//$r2 = pg_query($query2) or die ("Error getting number of news items.");
+//$row = pg_fetch_array($r2);
 //$show_num = $row[0];
 
 //if ($num_rows < $show_num) {
@@ -34,9 +34,9 @@ $n = $_SESSION['nickname'];
 
 // Determine who else is logged into the website.
 $query4 = "SELECT username FROM public.login WHERE loggedin='y'";
-//$r4 = mysql_query($query4) or die ("Error with query4.");
-//$row4 = mysql_fetch_array($r4);
-//$logged = mysql_num_rows($r4);
+//$r4 = pg_query($query4) or die ("Error with query4.");
+//$row4 = pg_fetch_array($r4);
+//$logged = pg_num_rows($r4);
 $r4 = pg_query($query4) or die ("Error with query4.");
 $row4 = pg_fetch_array($r4);
 $logged = pg_num_rows($r4);
@@ -49,8 +49,8 @@ include ('include/header.php');
 /*
 // Check for user's birthday.
 $bday = "SELECT username, nickname FROM public.user WHERE DATE_FORMAT(dob, '%b %e') = DATE_FORMAT(NOW(), '%b %e')";
-$bresult = @mysql_query($bday);
-$todaybday = mysql_fetch_array($bresult);
+$bresult = @pg_query($bday);
+$todaybday = pg_fetch_array($bresult);
 
 if ($todaybday) {
 	$motd = 'Happy Birthday ' .$todaybday['nickname']. '!';
@@ -60,8 +60,8 @@ if ($todaybday) {
 // Message of the day.
 if (!$todaybday) {
 	$query5 = "SELECT motd FROM options";
-	$mess = @mysql_query($query5);
-	$temp = mysql_fetch_array($mess);
+	$mess = @pg_query($query5);
+	$temp = pg_fetch_array($mess);
 
 	if ($temp) {
 		$motd = $temp['motd'];
@@ -78,8 +78,6 @@ if ($motd != '') {
 if ($u != "") {
 	// Retrieve the date from the last users login.
 	$query3 = "SELECT last_login FROM public.login WHERE username='$u'";
-	//$r3 = @mysql_query ($query3);
-	//$row3 = mysql_fetch_array($r3);
 	$r3 = pg_query($query3);
 	$row3 = pg_fetch_array($r3);
 
@@ -104,7 +102,7 @@ if ($u != "") {
 		for ($i = 0; $i < $logged; $i++) {
 			if ($row4[0] != $u)
 				echo " [ " .$row4[0]. " ] ";
-			$row4 = mysql_fetch_array($r4);
+			$row4 = pg_fetch_array($r4);
 		}
 		echo "</p>\n";
 	}
@@ -128,20 +126,20 @@ else {
 /*
 // Display the news.
 for ($i = 0; $i < $show; $i++) {
-	$row = mysql_fetch_array($r);
+	$row = pg_fetch_array($r);
 	$date = $row[4];
 
 
 	// Get the users nickname and e-mail.
 	$query3 = "SELECT nickname, email, picture FROM public.user WHERE username='" . $row['username'] . "'";
-	$r3 = mysql_query($query3, $link) or die ("Error with query.");
-	$e = mysql_fetch_array($r3);
+	$r3 = pg_query($query3, $link) or die ("Error with query.");
+	$e = pg_fetch_array($r3);
 
 
 	// Determine the users preference for their post name.
 	$query3 = "SELECT post_name FROM public.pref WHERE username='" . $row['username'] . "'";
-	$r3 = mysql_query($query3);
-	$p = mysql_fetch_array($r3);
+	$r3 = pg_query($query3);
+	$p = pg_fetch_array($r3);
 
 
 	echo '<table>' . "\n";
@@ -189,8 +187,8 @@ for ($i = 0; $i < $show; $i++) {
 	// Print the comments link, if there are comments.
 	if ($row['comment_fl'] == 'y') {
 		$query_cmnt = "SELECT cmntID FROM public.comments WHERE newsID='".$row['newsID']."'";
-		$cmnt_rslt = mysql_query($query_cmnt) or die ("Error with query.");
-		$num_cmnts = mysql_num_rows($cmnt_rslt);
+		$cmnt_rslt = pg_query($query_cmnt) or die ("Error with query.");
+		$num_cmnts = pg_num_rows($cmnt_rslt);
 		echo '  <tr><td colspan="3"><a href="comments.php?newsID=' . $row['newsID'] . '">Comments ('.$num_cmnts.')</a></td></tr>' . "\n";
 	}
 
@@ -210,7 +208,7 @@ if ($archive_link)
   <tr>
     <td><img src="images/valid_xhtml.gif" /></td>
 		<td><img src="images/php-power-white.gif" /></td>
-		<td><img src="images/mysql.png" /></td>
+		<td><img src="images/pg.png" /></td>
 	</tr>
 </table>
 <?php

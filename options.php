@@ -14,8 +14,10 @@ if (isset($_POST['reset'])) {
 	$user = $_GET['u'];
 
 	$query = "SELECT email, nickname FROM public.user WHERE username='$user'";
-	$r = mysql_query($query) or die ("Error with query.");
-	$row = mysql_fetch_array($r);
+	//$r = pg_query($query) or die ("Error with query.");
+	//$row = pg_fetch_array($r);
+	$r = pg_query($query) or die ("Error with query.");
+	$row = pg_fetch_array($r);
 
 	if ($row['nickname'] != "") {
 		$u = $row['nickname'];
@@ -27,7 +29,8 @@ if (isset($_POST['reset'])) {
 	}
 
 	$query2 = "UPDATE public.login SET password=SHA1($p) WHERE username='$user'";
-	$r2 = mysql_query($query2) or die ("Error with query.");
+	//$r2 = pg_query($query2) or die ("Error with query.");
+	$r2 = pg_query($query2) or die ("Error with query.");
 
 	$to = $row['email'];
 	$subject = "Your password";
@@ -42,15 +45,15 @@ if (isset($_POST['delete'])) {
 	$user = $_GET['u'];
 
 	$query = "DELETE FROM public.comments WHERE username='$user'";
-	$c = mysql_query($query) or die ("Error with comments table.");
+	$c = pg_query($query) or die ("Error with comments table.");
 	$query = "DELETE FROM public.login WHERE username='$user'";
-	$l = mysql_query($query) or die ("Error with login table.");
+	$l = pg_query($query) or die ("Error with login table.");
 	$query = "DELETE FROM public.news WHERE username='$user'";
-	$n = mysql_query($query) or die ("Error with news table.");
+	$n = pg_query($query) or die ("Error with news table.");
 	$query = "DELETE FROM public.pref WHERE username='$user'";
-	$p = mysql_query($query) or die ("Error with pref table.");
+	$p = pg_query($query) or die ("Error with pref table.");
 	$query = "DELETE FROM public.user WHERE username='$user'";
-	$r = mysql_query($query) or die ("Error with user table.");
+	$r = pg_query($query) or die ("Error with user table.");
 
 	if ($c && $l && $n && $p && $r)
 		echo '<p class="success">'.$user.' successfully deleted from database.</p>' . "\n";
@@ -64,7 +67,7 @@ if (isset($_POST['icon'])) {
 
 	if ($d == 'y') {
 		$query2 = "UPDATE public.user SET picture='' WHERE username='$u'";
-		$r2 = mysql_query($query2) or die ("uh oh");
+		$r2 = pg_query($query2) or die ("uh oh");
 
 		echo '<p class="success">Icon Deleted.</p>' . "\n";
 	}
@@ -77,7 +80,7 @@ if (isset($_POST['icon'])) {
 
 			if (move_uploaded_file ($_FILES['image']['tmp_name'],"./uploads/".$username.".".$e.""))	{
 				$query2 = "UPDATE public.user SET picture='".$username.".".$e."' WHERE username='$u'";
-				$r2 = mysql_query($query2) or die ("uh oh");
+				$r2 = pg_query($query2) or die ("uh oh");
 
 				echo '<p class="success">Icon Uploaded.</p>' . "\n";
 			}
@@ -99,9 +102,9 @@ if (isset($_POST['pass'])) {
 	$length = strlen($newpass);
 
 	$query = "SELECT password FROM public.login WHERE username='$u'";
-	$r = mysql_query($query) or die ("Error with query.");
+	$r = pg_query($query) or die ("Error with query.");
 
-	$row= mysql_fetch_array($r);
+	$row= pg_fetch_array($r);
 
 	if ($oldpass != $oldpass2)
 		echo '<p class="error">Your old password could not be confirmed.</p>' . "\n";
@@ -112,7 +115,7 @@ if (isset($_POST['pass'])) {
 			echo '<p class="success">Password successfully changed.</p>' . "\n";
 
 			$query = "UPDATE public.login SET password=sha1('" .$newpass. "') WHERE username='$u'";
-			$r = mysql_query($query) or die ("Error with query.");
+			$r = pg_query($query) or die ("Error with query.");
 		}
 	}
 	else
@@ -135,20 +138,20 @@ if (isset($_POST['user'])) {
 
 	if ($cf == 'y')	{
 		$query = "UPDATE public.user SET fullname='$f' WHERE username='$u'";
-		$r = mysql_query($query) or die ("Error with query.");
+		$r = pg_query($query) or die ("Error with query.");
 		echo '<p class="success">Fullname changed.</p>' . "\n";
 	}
 	if ($cn == "y")	{
 		$query = "UPDATE public.user SET nickname='$n' WHERE username='$u'";
-		$r = mysql_query($query) or die ("Error with query.");
+		$r = pg_query($query) or die ("Error with query.");
 
 		$query = "SELECT post_name FROM public.pref WHERE username='$u'";
-		$r = mysql_query($query);
-		$pn = mysql_fetch_row($r);
+		$r = pg_query($query);
+		$pn = pg_fetch_row($r);
 
 		if ($n == '' && $pn[0] == 'nickname') {
 			$query = "UPDATE public.pref SET post_name='username' WHERE username='$u'";
-			$r = mysql_query($query) or die ("Error with query.");
+			$r = pg_query($query) or die ("Error with query.");
 		}
 
 		echo '<p class="success">Nickname changed.</p>' . "\n";
@@ -157,17 +160,17 @@ if (isset($_POST['user'])) {
 	}
 	if ($ce == "y")	{
 		$query = "UPDATE public.user SET email='$e' WHERE username='$u'";
-		$r = mysql_query($query) or die ("Error with query.");
+		$r = pg_query($query) or die ("Error with query.");
 		echo '<p class="success">E-mail changed.</p>' . "\n";
 	}
 	if ($cs == "y")	{
 		$query = "UPDATE public.user SET screenname='$s' WHERE username='$u'";
-		$r = mysql_query($query) or die ("Error with query.");
+		$r = pg_query($query) or die ("Error with query.");
 		echo '<p class="success">Screenname changed.</p>' . "\n";
 	}
 	if ($cw == "y") {
 		$query = "UPDATE public.user SET website='$w' WHERE username='$u'";
-		$r = mysql_query($query) or die ("Error with query.");
+		$r = pg_query($query) or die ("Error with query.");
 		echo '<p class="success">Website changed.</p>' . "\n";
 	}
 }
@@ -178,12 +181,12 @@ if (isset($_POST['pref'])) {
 	$pn = $_POST['postname'];
 
 	$query = "SELECT nickname FROM public.user WHERE username='$u'";
-	$nn = mysql_query($query);
-	$n = mysql_fetch_row($nn);
+	$nn = pg_query($query);
+	$n = pg_fetch_row($nn);
 
 	if (($pn == "nickname" && $n[0] != "") || $pn == "username") {
 		$query = "UPDATE public.pref SET post_name='$pn' WHERE username='$u'";
-		$r = mysql_query($query) or die ("Error with query.");
+		$r = pg_query($query) or die ("Error with query.");
 		echo '<p class="success">Preferences changed.</p>' . "\n";
 	}
 	else {
@@ -198,7 +201,7 @@ if (isset($_POST['newmotd'])) {
 
 	if ($motd != '') {
 		$query = "UPDATE public.options SET motd='$motd'";
-		$r = @mysql_query($query);
+		$r = @pg_query($query);
 
 		echo '<p class="success">Message of the Day changed.</p>' . "\n";
 	}
@@ -208,20 +211,16 @@ if (isset($_POST['newmotd'])) {
 
 
 $query = "SELECT * FROM public.user WHERE username='$u'";
-//$r = mysql_query($query) or die ("Error with query.");
-//$row = mysql_fetch_array($r);
 $r = pg_query($query) or die ("Error with query.");
 $row = pg_fetch_array($r);
 
 $query3 = "SELECT * FROM public.pref WHERE username='$u'";
-//$r3 = mysql_query($query3) or die ("Error with query.");
-//$postn = mysql_fetch_array($r3);
 $r3 = pg_query($query3) or die ("Error with query.");
 $postn = pg_fetch_array($r3);
 
 //$query9 = "SELECT motd FROM options";
-//$r9 = mysql_query($query9) or die ("Error with query.");
-//$res = mysql_fetch_array($r9);
+//$r9 = pg_query($query9) or die ("Error with query.");
+//$res = pg_fetch_array($r9);
 //$motd = $res['motd'];
 
 
@@ -244,8 +243,8 @@ if ($_SESSION['access'] == "admin")
 	echo '<tr><td>[ <a href="newuser.php">Create User</a> ]</td><td colspan="2">&nbsp;</td></tr>' . "\n";
 
 	$query2 = "SELECT username FROM login WHERE access!='admin' ORDER BY username";
-	$r2 = mysql_query($query2) or die ("Error with query.");
-	$num_rows = mysql_num_rows($r2);
+	$r2 = pg_query($query2) or die ("Error with query.");
+	$num_rows = pg_num_rows($r2);
 
 	if ($num_rows > 1)
 	{
@@ -257,7 +256,7 @@ if ($_SESSION['access'] == "admin")
 
 		for ($i = 0; $i < $num_rows; $i++)
 		{
-			$row2 = mysql_fetch_array($r2);
+			$row2 = pg_fetch_array($r2);
 			if ($row2['username'] != $u)
 				echo '    <option value="' .$row2['username']. '">' .$row2['username']. '</option>' . "\n";
 		}
@@ -274,11 +273,11 @@ if ($_SESSION['access'] == "admin")
 		echo '    <option selected="selected" value=""></option>' . "\n";
 
 		$query2 = "SELECT username FROM login WHERE access!='admin' ORDER BY username";
-		$r2 = mysql_query($query2) or die ("Error with query.");
+		$r2 = pg_query($query2) or die ("Error with query.");
 
 		for ($i = 0; $i < $num_rows; $i++)
 		{
-			$row2 = mysql_fetch_array($r2);
+			$row2 = pg_fetch_array($r2);
 			if ($row2['username'] != $u)
 				echo '    <option value="' .$row2['username']. '">' .$row2['username']. '</option>' . "\n";
 		}
@@ -303,8 +302,8 @@ if ($_SESSION['access'] == "admin")
 
 
 $img = "SELECT picture FROM public.user WHERE username='$u'";
-$imgr = mysql_query($img);
-$imgrow = mysql_fetch_array($imgr);
+$imgr = pg_query($img);
+$imgrow = pg_fetch_array($imgr);
 
 ?>
 <form action="<? echo basename($PHP_SELF) ?>" method="post" name="icon" enctype="multipart/form-data">
