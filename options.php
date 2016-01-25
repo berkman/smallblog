@@ -101,7 +101,7 @@ if (isset($_POST['pass'])) {
 	$newpass = $_POST['newpass'];
 	$length = strlen($newpass);
 
-	$query = "SELECT password FROM public.login WHERE username='$u'";
+	$query = "SELECT password = crypt('$p', password) FROM public.login WHERE username = '$u'";
 	$r = pg_query($query) or die ("Error with query.");
 
 	$row = pg_fetch_array($r);

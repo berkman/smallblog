@@ -30,12 +30,13 @@ if (isset($_POST['submit'])) {
 
 
 	if ($u && $p) {
-		$query = "SELECT username, access FROM public.login WHERE username='$u' AND crypt('$p', gen_salt('bf', 8))";
+		$query = "SELECT password = crypt('$p', password), access FROM public.login WHERE username = '$u'";
+		//$query = "SELECT username, access FROM public.login WHERE username='$u' AND crypt('$p', gen_salt('bf', 8))";
 		//$query = "SELECT username, access FROM public.login WHERE username='$u'";
 		$r = pg_query($query);
 		$row = pg_fetch_array($r);
 
-		if ($row) {
+		if ($row[0]) {
 			$query2 = "SELECT nickname FROM public.user WHERE username='$u'";
 			$r2 = pg_query($query2);
 			$row2 = pg_fetch_array($r2);
