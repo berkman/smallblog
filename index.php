@@ -7,7 +7,7 @@ session_start();
 
 $u = $_SESSION['username'];
 $n = $_SESSION['nickname'];
-//$motd = '';
+$motd = '';
 
 
 // Get the news from the database.
@@ -49,18 +49,18 @@ include ('include/header.php');
 /*
 // Check for user's birthday.
 $bday = "SELECT username, nickname FROM public.user WHERE DATE_FORMAT(dob, '%b %e') = DATE_FORMAT(NOW(), '%b %e')";
-$bresult = @pg_query($bday);
+$bresult = pg_query($bday);
 $todaybday = pg_fetch_array($bresult);
 
 if ($todaybday) {
 	$motd = 'Happy Birthday ' .$todaybday['nickname']. '!';
 }
 
-
+*/
 // Message of the day.
 if (!$todaybday) {
-	$query5 = "SELECT motd FROM options";
-	$mess = @pg_query($query5);
+	$query5 = "SELECT motd FROM public.options";
+	$mess = pg_query($query5);
 	$temp = pg_fetch_array($mess);
 
 	if ($temp) {
@@ -72,8 +72,9 @@ if (!$todaybday) {
 if ($motd != '') {
 	echo '<p class="motd">[ '.$motd.' ]</p>';
 }
-*/
 
+
+/*
 // Logged in user.
 if ($u != "") {
 	// Retrieve the date from the last users login.
