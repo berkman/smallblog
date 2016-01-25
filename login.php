@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 			exit();
 		}
 		else {
-			$message = $message . '<p class="error">Username or password incorrect.</p>' . "\n";
+			$message = $message . '<p class="error">Username or password incorrect.</p>' . $row[0] . "   " . $row[1] . "\n";
 		}
 	}
 	else {
