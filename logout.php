@@ -10,11 +10,9 @@ $t = $_SESSION['login'];
 include("include/header.php");
 
 $query2 = "UPDATE login SET last_login='$t' WHERE username='$u'";
-//$r2 = @pg_query ($query2);
 $r2 = pg_query($query2);
 
 $query3 = "UPDATE login SET loggedin='n' WHERE username='$u'";
-//$r3 = @pg_query ($query3);
 $r3 = pg_query($query3);
 
 session_unset();

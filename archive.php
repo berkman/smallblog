@@ -24,7 +24,7 @@ else
 {
 	$query = "SELECT newsID, subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y'), comment_fl, image FROM news ORDER BY newsID DESC";
 	$query_result = pg_query ($query);
-	$num_records = @pg_num_rows ($query_result);
+	$num_records = pg_num_rows ($query_result);
 
 	if ($num_records > $display)
 		$num_pages = ceil ($num_records/$display);
@@ -40,7 +40,7 @@ else
 
 
 $query = "SELECT newsID, subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y'), comment_fl, image FROM news ORDER BY newsID DESC LIMIT $start, $display";
-$result = @pg_query ($query);
+$result = pg_query ($query);
 $num = pg_num_rows ($result);
 
 if ($num > 0)

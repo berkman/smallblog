@@ -23,7 +23,7 @@ else
 	$query = "SELECT newsID, username, subject, body, DATE_FORMAT(posted, '%W, %M %d, %Y') FROM public.news ORDER BY newsID";
 
 
-$r = @pg_query($query) or die ("Error with query.");
+$r = pg_query($query) or die ("Error with query.");
 $num_rows = pg_num_rows($r);
 
 
@@ -35,7 +35,7 @@ include("include/header.php");
 
 
 if (isset($_POST['submit'])) {
-	$r2 = @pg_query($query) or die ("Error with query.");
+	$r2 = pg_query($query) or die ("Error with query.");
 	$num_rows2 = pg_num_rows($r2);
 
 	for ($i = 0; $i < $num_rows2; $i++)	{
@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 }
 
 
-$r = @pg_query($query) or die ("Error with query.");
+$r = pg_query($query) or die ("Error with query.");
 $num_rows = pg_num_rows($r);
 
 

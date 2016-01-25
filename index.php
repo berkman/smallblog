@@ -57,6 +57,8 @@ if ($todaybday) {
 }
 
 */
+
+
 // Message of the day.
 if (!$todaybday) {
 	$query5 = "SELECT motd FROM public.options";
@@ -74,7 +76,6 @@ if ($motd != '') {
 }
 
 
-/*
 // Logged in user.
 if ($u != "") {
 	// Retrieve the date from the last users login.
