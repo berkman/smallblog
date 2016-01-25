@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 
 	if ($s != '' && $b != '') {
 		$query = "INSERT INTO news (username, subject, body, comment_fl, posted, image) VALUES ('$u', '$s', '$b', '$c', CURRENT_TIMESTAMP(), '$i')";
-		$r = mysql_query($query);
+		$r = pg_query($query);
 
 		echo '<p class="success">News Posted.</p>';
 	}

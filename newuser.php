@@ -11,15 +11,15 @@ if (isset($_POST['submit'])) {
 	$p = $_POST['password'];
 	$a = $_POST['access'];
 	$e = $_POST['email'];
-	
+
 	$query = "INSERT INTO login (username, password, access, signup) VALUES ('$u', sha1('$p'), '$a', CURRENT_TIMESTAMP())";
-	$r = mysql_query($query) or die ("Error with query.");
-	
+	$r = pg_query($query) or die ("Error with query.");
+
 	$query = "INSERT INTO user (username, email) VALUES ('$u', '$e')";
-	$r = mysql_query($query) or die ("Error with query.");
-	
+	$r = pg_query($query) or die ("Error with query.");
+
 	$query = "INSERT INTO pref (username, post_name) VALUES ('$u', 'username')";
-	$r = mysql_query($query) or die ("Error with query.");
+	$r = pg_query($query) or die ("Error with query.");
 
 	echo '<p class="success">User successfully created.</p>' . "\n";
 }

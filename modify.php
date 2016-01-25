@@ -23,8 +23,8 @@ else
 	$query = "SELECT newsID, username, subject, body, DATE_FORMAT(posted, '%W, %M %d, %Y') FROM public.news ORDER BY newsID";
 
 
-$r = @mysql_query($query) or die ("Error with query.");
-$num_rows = mysql_num_rows($r);
+$r = @pg_query($query) or die ("Error with query.");
+$num_rows = pg_num_rows($r);
 
 
 
@@ -35,26 +35,26 @@ include("include/header.php");
 
 
 if (isset($_POST['submit'])) {
-	$r2 = @mysql_query($query) or die ("Error with query.");
-	$num_rows2 = mysql_num_rows($r2);
+	$r2 = @pg_query($query) or die ("Error with query.");
+	$num_rows2 = pg_num_rows($r2);
 
 	for ($i = 0; $i < $num_rows2; $i++)	{
 
-		$row2 = mysql_fetch_array($r2);
+		$row2 = pg_fetch_array($r2);
 
 		$check = $row2['newsID'] . "-keeprem";
 		if ($_POST[$check] == "r") {
 			$query3 = "DELETE FROM public.news WHERE newsID='".$row2['newsID']."'";
-			$r3 = mysql_query($query3) or die ("Error with delete.");
+			$r3 = pg_query($query3) or die ("Error with delete.");
 			echo '<p class="success">Deleted from News.</p>' . "\n";
 
 			$query3 = "SELECT newsID FROM public.comments WHERE newsID='".$row2['newsID']."'";
-			$r3 = mysql_query($query3) or die ("Error with delete.");
-			$row3 = mysql_fetch_array($r3);
+			$r3 = pg_query($query3) or die ("Error with delete.");
+			$row3 = pg_fetch_array($r3);
 
 			if ($row2) {
 				$query3 = "DELETE FROM public.comments WHERE newsID='".$row2['newsID']."'";
-				$r3 = mysql_query($query3) or die ("Error with delete.");
+				$r3 = pg_query($query3) or die ("Error with delete.");
 				echo '<p class="success">Deleted from Comments.</p>' . "\n";
 			}
 		}
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 			$ns = $_POST[$s];
 			if ($ns != $row2['subject']) {
 				$query3 = "UPDATE public.news SET subject='$ns' WHERE newsID='$n'";
-				$r3 = mysql_query($query3) or die ("Error with query.");
+				$r3 = pg_query($query3) or die ("Error with query.");
 			}
 
 			// Update modified body
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
 			$nb = $_POST[$b];
 			if (stripslashes($nb) != $row2['body']) {
 				$query3 = "UPDATE public.news SET body='$nb' WHERE newsID='$n'";
-				$r3 = mysql_query($query3) or die ("Error with query.");
+				$r3 = pg_query($query3) or die ("Error with query.");
 			}
 
 			if ( (stripslashes($nb) != $row2['body']) || ($ns != $row2['subject']) ) {
@@ -86,8 +86,8 @@ if (isset($_POST['submit'])) {
 }
 
 
-$r = @mysql_query($query) or die ("Error with query.");
-$num_rows = mysql_num_rows($r);
+$r = @pg_query($query) or die ("Error with query.");
+$num_rows = pg_num_rows($r);
 
 
 
@@ -99,7 +99,7 @@ echo '<p class="title">Modify News</p>' . "\n";
 <?
 
 for ($i = 0; $i < $num_rows; $i++) {
-	$row = mysql_fetch_array($r);
+	$row = pg_fetch_array($r);
 	$date = $row[4];
 
 	echo '<table>' . "\n";

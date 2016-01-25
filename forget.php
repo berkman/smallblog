@@ -13,22 +13,22 @@ if (isset($_POST['reset']))
 {
 	$user = $_POST['username'];
 	$email = $_POST['email'];
-	
+
 	$query = "SELECT email, nickname FROM user WHERE username='$user'";
-	$r = mysql_query($query) or die ("Error with query.");
-	$row = mysql_fetch_array($r);
-	
+	$r = pg_query($query) or die ("Error with query.");
+	$row = pg_fetch_array($r);
+
 	if ($email == $row['email']) {
 		if ($row['nickname'] != "")
 			$u = $row['nickname'];
-		
+
 		$p = "";
 		for($i = 0; $i < 6; $i++)
 			$p = $p . rand(1,9);
-			
+
 		$query2 = "UPDATE login SET password=SHA1($p) WHERE username='$user'";
-		$r2 = mysql_query($query2) or die ("Error with query.");
-		
+		$r2 = pg_query($query2) or die ("Error with query.");
+
 		$to = $row['email'];
 		$subject = "Your bong-it.com password";
 		$body = $user . ", you're a dumbass.  The server has reset your password.  Your new password is: " .$p. "\n\nThanks,\nbong-it.com admin";

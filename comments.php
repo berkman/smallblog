@@ -24,8 +24,8 @@ echo '<p class="title">'.$title.'</p>' . "\n";
 
 
 $query = "SELECT subject, username, body, DATE_FORMAT(posted, '%W, %M %d, %Y') FROM news WHERE newsID='$n'";
-$r = mysql_query($query);
-$row = mysql_fetch_array($r);
+$r = pg_query($query);
+$row = pg_fetch_array($r);
 
 
 if (isset($_POST['post'])) {
@@ -34,7 +34,7 @@ if (isset($_POST['post'])) {
 
 
 	$query = "INSERT INTO comments (newsID, username, subject, comment, cmnt_stmp) VALUES ('$n', '$u', '$s', '$c', NOW())";
-	$r = mysql_query($query);
+	$r = pg_query($query);
 
 	echo '<p class="success">Comment posted.</p>' . "<br />";
 }
@@ -45,14 +45,14 @@ $date = $row[4];
 
 // Get the users nickname and e-mail.
 $query3 = "SELECT nickname, email, picture FROM user WHERE username='" . $row['username'] . "'";
-$r3 = mysql_query($query3) or die ("Error with query.");
-$e = mysql_fetch_array($r3);
+$r3 = pg_query($query3) or die ("Error with query.");
+$e = pg_fetch_array($r3);
 
 
 // Determine the users preference for their post name.
 $query3 = "SELECT post_name FROM pref WHERE username='" . $row['username'] . "'";
-$r3 = mysql_query($query3);
-$p = mysql_fetch_array($r3);
+$r3 = pg_query($query3);
+$p = pg_fetch_array($r3);
 
 
 echo '<table>' . "\n";
@@ -108,8 +108,8 @@ echo '<hr noshade="noshade" width="50%" />' . "\n";
 
 // Comments
 $query2 = "SELECT cmntID, subject, username, comment, DATE_FORMAT(cmnt_stmp, '%W, %M %d, %Y') FROM comments WHERE newsID='$n'";
-$r2 = mysql_query($query2);
-$num_rows2 = mysql_num_rows($r2);
+$r2 = pg_query($query2);
+$num_rows2 = pg_num_rows($r2);
 
 
 /*if ($num_rows2 > 0) {
@@ -117,7 +117,7 @@ $num_rows2 = mysql_num_rows($r2);
 }*/
 
 for ($i = 0; $i < $num_rows2; $i++) {
-	$row2 = mysql_fetch_array($r2);
+	$row2 = pg_fetch_array($r2);
 	$date = $row2[4];
 
 	echo '<table>' . "\n";
