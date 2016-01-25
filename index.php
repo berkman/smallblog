@@ -77,7 +77,7 @@ if ($motd != '') {
 // Logged in user.
 if ($u != "") {
 	// Retrieve the date from the last users login.
-	$query3 = "SELECT DATE_FORMAT(last_login, '%W, %M %d, %Y at %h:%i %p') FROM public.login WHERE username='$u'";
+	$query3 = "SELECT last_login FROM public.login WHERE username='$u'";
 	//$r3 = @mysql_query ($query3);
 	//$row3 = mysql_fetch_array($r3);
 	$r3 = pg_query($query3);

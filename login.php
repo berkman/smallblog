@@ -13,7 +13,6 @@ $tr = pg_query($t);
 $trow = pg_fetch_row($tr);
 
 $_SESSION['login'] = $trow[0];
-
 if (isset($_POST['submit'])) {
 	if (empty($_POST['username'])) {
 		$u = false;
