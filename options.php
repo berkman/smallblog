@@ -108,14 +108,14 @@ if (isset($_POST['pass'])) {
 
 	if ($oldpass != $oldpass2)
 		echo '<p class="error">Your old password could not be confirmed.</p>' . "\n";
-	//else if ($row['password'] == sha1($oldpass)) {
+	//else if ($row['password'] == crypt('" .$oldpass. "', gen_salt('bf', 8))) {
 	else if (true) {
 		if ($length < 6)
 			echo '<p class="error">New password must be at least 6 characters.</p>' . "\n";
 		else {
 			echo '<p class="success">Password successfully changed.</p>' . "\n";
 
-			$query = "UPDATE public.login SET password=sha1('" .$newpass. "') WHERE username='$u'";
+			$query = "UPDATE public.login SET password=crypt('" .$newpass. "', gen_salt('bf', 8)) WHERE username='$u'";
 			$r = pg_query($query) or die ("Error with query.");
 		}
 	}
