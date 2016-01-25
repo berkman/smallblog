@@ -11,7 +11,7 @@ $s = $_POST['subject'];
 $b = $_POST['body'];
 $c = $_POST['comment_fl'];
 
-/*
+
 if (isset($_POST['submit'])) {
 	if (is_uploaded_file ($_FILES['image']['tmp_name'])) {
 		if (move_uploaded_file ($_FILES['image']['tmp_name'],"./news/{$_FILES['image']['name']}"))
@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($s != '' && $b != '') {
-		$query = "INSERT INTO news (username, subject, body, comment_fl, posted, image) VALUES ('$u', '$s', '$b', '$c', CURRENT_TIMESTAMP(), '$i')";
+		$query = "INSERT INTO public.news (username, subject, body, comment_fl, posted, image) VALUES ('$u', '$s', '$b', '$c', CURRENT_TIMESTAMP, '$i')";
 		$r = pg_query($query);
 
 		echo '<p class="success">News Posted.</p>';
@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 	else
 		echo '<p class="error">Please enter a subject and a body.</p>' . "\n";
 }
-*/
+
 
 echo '<p class="title">'.$title.'</p>' . "\n";
 
