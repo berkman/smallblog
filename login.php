@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		$r = pg_query($query);
 		$row = pg_fetch_array($r);
 
-		if ($row[0] == "TRUE") {
+		if ($row[0] == "t") {
 			$query2 = "SELECT nickname FROM public.user WHERE username='$u'";
 			$r2 = pg_query($query2);
 			$row2 = pg_fetch_array($r2);
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 			exit();
 		}
 		else {
-			$message = $message . '<p class="error">Username or password incorrect.</p>' . $row[0] . "   " . $row[1] . "\n";
+			$message = $message . '<p class="error">Username or password incorrect.</p>' . "\n";
 		}
 	}
 	else {
