@@ -125,7 +125,7 @@ else {
 	echo '<p>[ <a href="login.php">Log In</a> ]</p>' . "\n";
 }
 
-/*
+
 // Display the news.
 for ($i = 0; $i < $show; $i++) {
 	$row = pg_fetch_array($r);
@@ -198,7 +198,6 @@ for ($i = 0; $i < $show; $i++) {
 	echo '<br />' . "\n";
 }
 
- */
 
 // Print the archives link, if needed.
 if ($archive_link)
