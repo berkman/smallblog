@@ -199,16 +199,6 @@ if ($archive_link)
 	echo '<p>[ <a href="archive.php?s=' . $show_num . '">Archive</a> ]</p>' . "\n";
 
 
-?>
-<table cellpadding="4" cellspacing="4">
-  <tr>
-    <td><img src="images/valid_xhtml.gif" /></td>
-		<td><img src="images/php-power-white.gif" /></td>
-		<td><img src="images/mysql.png" /></td>
-	</tr>
-</table>
-<?php
-
 // Print the page footer.
 include ('include/footer.php');
 
