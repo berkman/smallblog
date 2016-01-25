@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 			$r2 = pg_query($query2);
 			$row2 = pg_fetch_array($r2);
 
-			$query3 = "UPDATE public.login SET loggedin='y', last_login='$_SESSION['login']' WHERE username='$u'";
+			$query3 = "UPDATE public.login SET loggedin='y', last_login='".$_SESSION['login']."' WHERE username='$u'";
 			//$r3 = @mysql_query ($query3);
 			$r3 = pg_query($query3);
 
