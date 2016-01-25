@@ -97,21 +97,20 @@ if (isset($_POST['icon'])) {
 
 if (isset($_POST['pass'])) {
 	$oldpass = $_POST['oldpass'];
-	$oldpass2 = $_POST['oldpass2'];
 	$newpass = $_POST['newpass'];
+	$newpass2 = $_POST['newpass2'];
 	$length = strlen($newpass);
 
-	$query = "SELECT password = crypt('$p', password) FROM public.login WHERE username = '$u'";
+	$query = "SELECT password = crypt('$oldpass', password) FROM public.login WHERE username = '$u'";
 	$r = pg_query($query) or die ("Error with query.");
 
 	$row = pg_fetch_array($r);
 
-	if ($oldpass != $oldpass2)
-		echo '<p class="error">Your old password could not be confirmed.</p>' . "\n";
-	//else if ($row['password'] == crypt('" .$oldpass. "', gen_salt('bf', 8))) {
-	else if (true) {
-		if ($length < 6)
-			echo '<p class="error">New password must be at least 6 characters.</p>' . "\n";
+	if ($newpass != $newpass2)
+		echo '<p class="error">Your new password could not be confirmed.</p>' . "\n";
+	else if ($row[0] == 't') {
+		if ($length < 8)
+			echo '<p class="error">New password must be at least 8 characters.</p>' . "\n";
 		else {
 			echo '<p class="success">Password successfully changed.</p>' . "\n";
 
@@ -334,13 +333,13 @@ echo '<tr><td><input name="icon" type="submit" value="Submit" /></td></tr>' . "\
     <td><input name="oldpass" type="password" maxlength="10"></td>
   </tr>
   <tr>
-    <td>Confirm:</td>
-    <td><input name="oldpass2" type="password" maxlength="10"></td>
-  </tr>
-  <tr>
     <td>New Password:</td>
     <td><input name="newpass" type="password" maxlength="10"></td>
   </tr>
+	<tr>
+		<td>Confirm New Password:</td>
+		<td><input name="newpass2" type="password" maxlength="10"></td>
+	</tr>
   <tr>
     <td colspan="2"><input name="pass" type="submit" value="Submit"></td>
   </tr>

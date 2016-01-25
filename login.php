@@ -31,8 +31,6 @@ if (isset($_POST['submit'])) {
 
 	if ($u && $p) {
 		$query = "SELECT password = crypt('$p', password), username, access FROM public.login WHERE username = '$u'";
-		//$query = "SELECT username, access FROM public.login WHERE username='$u' AND crypt('$p', gen_salt('bf', 8))";
-		//$query = "SELECT username, access FROM public.login WHERE username='$u'";
 		$r = pg_query($query);
 		$row = pg_fetch_array($r);
 

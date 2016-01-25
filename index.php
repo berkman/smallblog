@@ -208,7 +208,7 @@ if ($archive_link)
   <tr>
     <td><img src="images/valid_xhtml.gif" /></td>
 		<td><img src="images/php-power-white.gif" /></td>
-		<td><img src="images/pg.png" /></td>
+		<td><img src="images/mysql.png" /></td>
 	</tr>
 </table>
 <?php
