@@ -128,9 +128,9 @@ for ($i = 0; $i < $show; $i++) {
 
 
 	// Get the users nickname and e-mail.
-	$query3 = "SELECT nickname, email, picture FROM public.user WHERE username='" . $row['username'] . "'";
-	$r3 = pg_query($query3, $link) or die ("Error with query3.");
-	$e = pg_fetch_array($r3);
+	$query9 = "SELECT nickname, email, picture FROM public.user WHERE username='" . $row['username'] . "'";
+	$r9 = pg_query($query9) or die ("Error with query9");
+	$e = pg_fetch_array($r9);
 
 
 	// Determine the users preference for their post name.
